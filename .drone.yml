@@ -1,0 +1,34 @@
+kind: pipeline
+type: docker                          # 在 Docker 內部執行的管道命令
+name: publish                         # 自定義名稱  ==> 用途 ？
+
+steps:
+  # 事件一
+  - name: host                        # 事件ㄧ的名稱(可自訂) 
+    image: alpine                     # 使用 alpine 容器
+    commands:                         # 欲執行的 shell 指令，這邊範例可以印出 host 內容
+      - cat /etc/host
+    when:                             # 無論 clone 成功或失敗，都會跑該事件
+      status: [ success, failure]
+  
+  - name: echo 
+    image: pulgins/git
+    commands:
+      - echo "hello drone!!!"
+    when:
+      branch:                          # 當觸發條件為 master 分支時會執行的動作
+      - master
+  
+  - name: dev_action
+    image: pulgins/git
+    commands:
+      - echo "dev action ...."
+    when:
+      branch:                           # 當觸發條件為 develop 分支時會執行的動作
+      - develop
+
+trigger:                                # 觸發 pipeline 條件，分支為 master，且進行 push 動作
+  branch:
+  - master
+  event:
+  - push
