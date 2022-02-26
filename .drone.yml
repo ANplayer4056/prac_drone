@@ -32,3 +32,5 @@ trigger:                                # 觸發 pipeline 條件，分支為 mas
   - master
   event:
   - push
+
+  # test commit
