@@ -12,7 +12,7 @@ steps:
       status: [ success, failure]
   
   - name: echo 
-    image: pulgins/git
+    image: appleboy/drone-git-push
     commands:
       -  echo "now in echo step"
     when:
@@ -20,7 +20,7 @@ steps:
       - master
   
   - name: dev_action
-    image: pulgins/git
+    image: appleboy/drone-git-push
     commands:
       - echo "dev action ...."
     when:
