@@ -1,15 +1,15 @@
 kind: pipeline
 type: docker                          # 在 Docker 內部執行的管道命令
-name: publish                         # 自定義名稱  ==> 用途 ？
-
+name: publish                         # 自定義名稱  ==> 用途 : 區分不同類型的 runner
+                                      # 一個 pipeline 一個 pipeline 這樣區分
 steps:
   # 事件一
   - name: host                        # 事件ㄧ的名稱(可自訂) 
     image: alpine                     # 使用 alpine 容器
-    commands:                         # 欲執行的 shell 指令，這邊範例可以印出 host 內容
+    commands:                         # 欲執行的 shell 指令
       - echo "now in host step"
-    when:                             # 無論 clone 成功或失敗，都會跑該事件
-      status: [ success, failure]
+    when:                             # when(觸發條件)
+      status: [ success, failure]     # 無論 clone 成功或失敗，都會跑該事件
   
   - name: echo 
     image: appleboy/drone-git-push
@@ -29,11 +29,11 @@ steps:
       branch:                           # 當觸發條件為 develop 分支時會執行的動作
       - develop
 
+
+                                        # trigger(觸發條件) ==> 觸發條件權重高於 when
 trigger:                                # 觸發 pipeline 條件，分支為 master，且進行 push 動作
   branch:
   - master
   - develop
   event:
   - push
-
-  # test commit 1111
