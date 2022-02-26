@@ -23,6 +23,8 @@ steps:
     image: appleboy/drone-git-push
     commands:
       - echo "dev action ...."
+      - pwd
+      - ls -al
     when:
       branch:                           # 當觸發條件為 develop 分支時會執行的動作
       - develop
