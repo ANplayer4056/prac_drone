@@ -7,14 +7,14 @@ steps:
   - name: host                        # 事件ㄧ的名稱(可自訂) 
     image: alpine                     # 使用 alpine 容器
     commands:                         # 欲執行的 shell 指令，這邊範例可以印出 host 內容
-      - cat /etc/host
+      - echo "now in host step"
     when:                             # 無論 clone 成功或失敗，都會跑該事件
       status: [ success, failure]
   
   - name: echo 
     image: pulgins/git
     commands:
-      - echo "hello drone!!!"
+      -  echo "now in echo step"
     when:
       branch:                          # 當觸發條件為 master 分支時會執行的動作
       - master
